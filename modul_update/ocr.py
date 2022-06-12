@@ -10,6 +10,10 @@ import numpy as np
 import argparse
 
 def prediksi(ob):
+  model_path = 'model_CNN.h5'
+
+  model = load_model(model_path)
+
   gray = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
   cropped = gray[10:,10:]
   blurred = cv2.GaussianBlur(cropped, (5, 5), 0)
