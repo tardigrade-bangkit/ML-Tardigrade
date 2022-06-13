@@ -10,4 +10,6 @@
 3. Read code properly and use custom tuning if you need
 
 # Dataset
-1. If you need dataset please reachme on https://github.com/atamrifai
+1. A-Z dataset : https://drive.google.com/file/d/15Hd5JiR_N9Gi0RW-WnNNb-wLn3OdUJmr/view?usp=sharing
+2. Brestiev Dataset : https://drive.google.com/file/d/15ZJm3p2qBK_BaSpBDnMODA6LTW1lrvN9/view?usp=sharing
+3. MNIST Dataset : https://www.researchgate.net/figure/9-Sample-digits-of-MNIST-handwritten-digit-database_fig1_264273647
