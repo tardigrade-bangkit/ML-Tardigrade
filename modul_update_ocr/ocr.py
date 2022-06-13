@@ -19,6 +19,7 @@ model_path = 'model_cnn.h5'
 model = load_model(model_path)
 
 def prediksi(ob):
+  tinggi, lebar = ob.shape[:2]
   gray = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
   cropped = gray[:,:]
   hasil = cropped.copy()
