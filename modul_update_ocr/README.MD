@@ -8,3 +8,6 @@
 1. Open file with .ipynb
 2. Open with google.collab or jupyer notebook
 3. Read code properly and use custom tuning if you need
+
+# Dataset
+1. If you need dataset please reachme on https://github.com/atamrifai
