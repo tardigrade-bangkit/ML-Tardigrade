@@ -8,52 +8,37 @@ import time
 import sys
 import numpy as np
 import argparse
+from tensorflow.keras.models import load_model
+import tensorflow as tf
+import cv2
+import matplotlib.pyplot as plt
+import imutils
+from imutils.contours import sort_contours
+
+model_path = 'model_cnn.h5'
+model = load_model(model_path)
 
 def prediksi(ob):
-  model_path = 'model_CNN.h5'
-
-  model = load_model(model_path)
-
   gray = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
-  cropped = gray[10:,10:]
-  blurred = cv2.GaussianBlur(cropped, (5, 5), 0)
+  cropped = gray[:,:]
+  hasil = cropped.copy()
+  for x in range (tinggi):
+      for y in range (lebar):
+          if cropped[x,y] < 90:
+              hasil[x,y] = 0
+          else:
+              hasil[x,y] = 255
 
-  # %matplotlib inline
-  # from matplotlib import cm
-  # fig = plt.figure(figsize=(16,4))
-  # ax = plt.subplot(1,4,1)
-  # ax.imshow(image)
-  # ax.set_title('original image');
+  blurred = cv2.GaussianBlur(hasil, (5, 5), 0)
 
-  # ax = plt.subplot(1,4,2)
-  # ax.imshow(gray,cmap=cm.binary_r)
-  # ax.set_axis_off()
-  # ax.set_title('grayscale image');
-
-  # ax = plt.subplot(1,4,3)
-  # ax.imshow(cropped,cmap=cm.binary_r)
-  # ax.set_axis_off()
-  # ax.set_title('cropped image');
-
-  # ax = plt.subplot(1,4,4)
-  # ax.imshow(blurred,cmap=cm.binary_r)
-  # ax.set_axis_off()
-  # ax.set_title('blurred image');
-  #plt.imshow(gray,cmap=cm.binary_r)
-
-  # perform edge detection, find contours in the edge map, and sort the
-  # resulting contours from left-to-right
-  edged = cv2.Canny(blurred, 30, 150) #low_threshold, high_threshold
+  
+  edged1 = cv2.Canny(blurred, 30, 150) #low_threshold, high_threshold
+  edged =  cv2.GaussianBlur(edged1, (5, 5), 0)
   cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
   cnts = imutils.grab_contours(cnts)
   cnts = sort_contours(cnts, method="left-to-right")[0]
 
-  # figure = plt.figure(figsize=(7,7))
-  # plt.axis('off');
-  # plt.imshow(edged,cmap=cm.binary_r);
-
   chars = []
-  # loop over the contours
   for c in cnts:
     # compute the bounding box of the contour and isolate ROI
     (x, y, w, h) = cv2.boundingRect(c)
@@ -67,7 +52,6 @@ def prediksi(ob):
     if tW > tH:
       thresh = imutils.resize(thresh, width=28)
     # otherwise, resize along the height
-
 
     # find how much is needed to pad
     (tH, tW) = thresh.shape
@@ -83,16 +67,6 @@ def prediksi(ob):
     padded = np.expand_dims(padded, axis=-1)
     # append image and bounding box data in char list
     chars.append((padded, (x, y, w, h)))
-
-      # plot isolated characters
-    # n_cols = 10
-    # n_rows = np.floor(len(chars)/ n_cols)+1
-    # fig = plt.figure(figsize=(1.5*n_cols,1.5*n_rows))
-    # for i,char in enumerate(chars):
-    #   ax = plt.subplot(n_rows,n_cols,i+1)
-    #   ax.imshow(char[0][:,:,0],cmap=cm.binary,aspect='auto')
-    #   #plt.axis('off')
-    # plt.tight_layout()
 
   boxes = [b[1] for b in chars]
   chars = np.array([c[0] for c in chars], dtype="float32")
