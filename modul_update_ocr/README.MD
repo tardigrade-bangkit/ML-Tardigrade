@@ -1,4 +1,5 @@
-# TUTORIAL MENGGUNAKAN MODUL
-1. Pastikan directory model dipasang di alamat yang benar : my_model.h5
-2. Pastikan modul ocr dapat dipanggil dengan baik dengan menjalankan function prediksi
-3. pastika directory pada main.py tepat sehingga output yang keluar berupa text
+# How to Add Modules to CC (Flask)
+1. Download all assets on github or clone
+2. Make sure "model.h5" in ocr.py **line 18** has the correct model address in your directoryy
+3. import ocr.py in main.py make sure ocr.py **finds the "prediction" function properly**
+4. file will appear when running main.py and add image address properly in main.py
