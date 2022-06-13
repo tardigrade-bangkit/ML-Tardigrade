@@ -6,4 +6,5 @@
 
 # How to testing and train your dataset
 1. Open file with .ipynb
-2. Read code properly and use custom tuning if you need
+2. Open with google.collab or jupyer notebook
+3. Read code properly and use custom tuning if you need
